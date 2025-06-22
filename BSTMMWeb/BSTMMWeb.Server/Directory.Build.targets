@@ -1,0 +1,7 @@
+<Project>
+  <!-- This target runs after Publish—but only when NOT in a container -->
+  <Target Name="PostBuild" AfterTargets="Publish"
+          Condition=" '$(DOTNET_RUNNING_IN_CONTAINER)' != 'true' ">
+    <Exec Command="docker-compose -f docker-compose.yml up --build -d" />
+  </Target>
+</Project>

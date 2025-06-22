@@ -1,0 +1,6 @@
+@BSTMMWeb.Server_HostAddress = http://localhost:5232
+
+GET {{BSTMMWeb.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

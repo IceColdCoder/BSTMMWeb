@@ -1,0 +1,33 @@
+﻿version: '3.8'
+services:
+  bstmmweb-server:
+    build:
+      context: ../
+      dockerfile: BSTMMWeb.Server/dockerfile
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - WEBROOT_PATH=/app/wwwroot
+      - ASPNETCORE_URLS=http://+:8080;https://+:8081
+    networks:
+      - app-network
+
+    # Uncomment below when SQL Server is needed
+    # sqlserver:
+    #   image: mcr.microsoft.com/mssql/server:2019-latest
+    #   container_name: sqlserver
+    #   environment:
+    #     - ACCEPT_EULA=Y
+    #     - SA_PASSWORD=YourPassword123
+    #   ports:
+    #     - "1433:1433"
+    #   networks:
+    #     - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+

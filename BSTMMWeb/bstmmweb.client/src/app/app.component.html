@@ -1,0 +1,12 @@
+<app-menu-bar></app-menu-bar>
+
+<div class="landing-page" *ngIf="!showQuoteForm">
+  <button (click)="openQuoteForm()">Get Quote</button>
+</div>
+
+<!-- Conditionally show the form -->
+
+<app-quote-form *ngIf="showQuoteForm"
+                (closeForm)="closeQuoteForm()">
+</app-quote-form>
+

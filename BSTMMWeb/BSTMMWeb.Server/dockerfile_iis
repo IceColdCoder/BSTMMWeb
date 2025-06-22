@@ -1,0 +1,52 @@
+# Stage 0: Build Angular + .NET (same as Kestrel build)
+FROM mcr.microsoft.com/dotnet/sdk:8.0-windowsservercore-ltsc2019 AS build
+
+WORKDIR /src
+ARG Configuration=Release
+ENV Configuration=${Configuration}
+ENV ASPNETCORE_ENVIRONMENT=Production
+RUN IF /I "%Configuration%"=="Debug" (setx /M ASPNETCORE_ENVIRONMENT "Development")
+
+# Install Node.js for Angular CLI
+RUN curl -L -o node.zip https://nodejs.org/dist/v18.19.1/node-v18.19.1-win-x64.zip \
+    && powershell -Command "Expand-Archive -Path node.zip -DestinationPath C:\node"
+USER ContainerAdministrator
+RUN setx /M PATH "C:\node\node-v18.19.1-win-x64;%PATH%"
+USER ContainerUser
+RUN npm install -g @angular/cli
+
+# Copy and restore projects
+COPY ["BSTMMWeb.Server/BSTMMWeb.Server.csproj","BSTMMWeb.Server/"]
+COPY ["bstmmweb.client/package.json","bstmmweb.client/"]
+COPY ["bstmmweb.client/package-lock.json","bstmmweb.client/"]
+WORKDIR /src/BSTMMWeb.Server
+RUN dotnet restore "BSTMMWeb.Server.csproj"
+
+# Copy source, build Angular, publish .NET
+WORKDIR /src
+COPY . .
+WORKDIR /src/bstmmweb.client
+RUN npm install && npm run build -- --output-path=../BSTMMWeb.Server/wwwroot
+WORKDIR /src/BSTMMWeb.Server
+RUN dotnet publish "BSTMMWeb.Server.csproj" -c %Configuration% -o /app/publish /p:UseAppHost=false
+
+# Stage 1: IIS Runtime image
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-windowsservercore-ltsc2019 AS iis
+
+# Enable IIS
+RUN powershell -NoProfile -Command Add-WindowsFeature Web-Server
+
+# Clean default website
+WORKDIR /inetpub/wwwroot
+RUN powershell -NoProfile -Command Remove-Item -Recurse -Force C:\inetpub\wwwroot\*
+
+# Copy published app into IIS wwwroot
+COPY --from=build /app/publish .
+
+# Expose HTTP and HTTPS
+EXPOSE 80
+EXPOSE 443
+
+# Start IIS and the ASP.NET Core app
+ENTRYPOINT ["powershell", "-NoProfile", "-Command", "Start-Service W3SVC; dotnet \"C:\inetpub\wwwroot\BSTMMWeb.Server.dll\"; Wait-Process -Id $PID"]
+

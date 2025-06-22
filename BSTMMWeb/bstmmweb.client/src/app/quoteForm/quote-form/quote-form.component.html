@@ -1,0 +1,86 @@
+<h2>{{ title }}</h2>
+
+<div class="quote-form-container">
+  <form [formGroup]="quoteForm" (ngSubmit)="onSubmit()">
+
+    <!-- Name Section -->
+    <fieldset formGroupName="name" class="mb-3">
+      <legend>Full Name</legend>
+
+      <div class="responsive-group">
+        <div class="responsive-field input-field max-w-24ch">
+          <label for="firstName">First Name</label>
+          <input id="firstName" type="text" formControlName="firstName" class="form-control form-control-sm">
+        </div>
+        <div class="responsive-field input-field max-w-24ch">
+          <label for="lastName">Last Name</label>
+          <input id="lastName" type="text" formControlName="lastName" class="form-control form-control-sm">
+        </div>
+        <div class="responsive-field max-w-fitcont">
+          <label for="suffix">Suffix</label>
+          <select id="suffix" formControlName="suffix" class="form-control form-control-sm select-tight">
+            <option *ngFor="let suffix of suffixOptions" [value]="suffix">
+              {{ suffix || '-- None --' }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </fieldset>
+
+    <!-- Address Section -->
+    <fieldset formGroupName="address" class="mb-3">
+      <legend>Full Address</legend>
+
+      <div class="responsive-group">
+        <div class="responsive-field input-addr max-w-50ch">
+          <label for="addrLineOne">Address Line 1</label>
+          <input id="addrLineOne" type="text" formControlName="addrLineOne" class="form-control form-control-sm">
+        </div>
+        <div class="responsive-field input-addr max-w-50ch">
+          <label for="addrLineTwo">Address Line 2</label>
+          <input id="addrLineTwo" type="text" formControlName="addrLineTwo" class="form-control form-control-sm">
+        </div>
+        <div class="responsive-field input-city max-w-28ch">
+          <label for="addrCity">City</label>
+          <input id="addrCity" type="text" formControlName="addrCity" class="form-control form-control-sm">
+        </div>
+        <div class="responsive-field input-zip max-w-10ch">
+          <label for="addrZip">ZIP</label>
+          <input id="addrZip" type="text" formControlName="addrZip" class="form-control form-control-sm">
+        </div>
+      </div>
+    </fieldset>
+
+    <!-- Contact Section -->
+    <fieldset formGroupName="contact" class="mb-3">
+      <legend>Contact</legend>
+
+      <div class="responsive-group">
+        <div class="responsive-field input-phone max-w-20ch">
+          <label for="phoneNum">Phone Number</label>
+          <input id="phoneNum" type="text" formControlName="phoneNum" class="form-control form-control-sm">
+        </div>
+        <div class="responsive-field max-w-fitcont">
+          <label for="phoneType">Phone Type</label>
+          <select id="phoneType" formControlName="phoneType" class="form-control form-control-sm select-tight">
+            <option value="cell">Cell</option>
+            <option value="home">Home</option>
+            <option value="business">Business</option>
+          </select>
+        </div>
+        <div class="responsive-field input-field">
+          <label for="email">Email</label>
+          <input id="email" type="email" formControlName="email" class="form-control form-control-sm">
+        </div>
+      </div>
+        <div class="responsive-field input-field">
+          <label for="notes">Notes</label>
+          <textarea id="notes" formControlName="notes" class="form-control form-control-sm textarea-notes"></textarea>
+        </div>
+
+    </fieldset>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+

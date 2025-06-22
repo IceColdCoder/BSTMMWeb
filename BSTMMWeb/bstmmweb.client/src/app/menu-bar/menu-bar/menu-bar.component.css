@@ -1,0 +1,53 @@
+.menu-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 480px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.menu-edge {
+  flex: 1 1 auto;
+  height: 374px;
+  width: auto;
+  object-fit: fill;
+  display: block;
+  z-index: 0;
+}
+
+.menu-bar-center {
+  position: relative; /* relative so children can use margin */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 480px;
+  z-index: 2;
+}
+
+.menu-logo {
+  position: relative; /* stays in flex flow */
+  height: 480px;
+  width: 480px;
+  flex: 0 0 auto;
+  z-index: 2;
+  display: block;
+  margin: 0 10px;
+}
+
+.menu-bracket-left,
+.menu-bracket-right {
+  height: 374px;
+  flex: 0 0 auto;
+  display: block;
+  z-index: 1;
+}
+
+.menu-bracket-left {
+  margin-right: -120px; /* push from center of logo */
+}
+
+.menu-bracket-right {
+  margin-left: -109px;
+}

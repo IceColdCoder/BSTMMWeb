@@ -1,0 +1,135 @@
+/* Main container alignment */
+.quote-form-container {
+  text-align: left;
+  padding-left: 1px;
+}
+
+.responsive-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: start;
+  gap: 1rem;
+}
+
+/* Default mobile layout */
+.responsive-field {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 100%;
+}
+
+  .responsive-field label {
+    width: 100%;
+    min-width: fit-content;
+    max-width: fit-content;
+    white-space: nowrap;
+  }
+
+.input-field input {
+  width: 100%;
+}
+
+.input-name input {
+  width: 100%;
+}
+
+.input-addr input {
+  min-width: 100%;
+}
+
+.input-phonenum input {
+  width: 100%;
+  min-width: 15ch;
+  max-width: 15ch;
+  flex-grow: 0;
+}
+
+.textarea-notes textarea {
+  min-width: 100%;
+  max-width: 100%;
+  width: 100%;
+  flex-grow: 1;
+}
+
+.select-tight select {
+  width: fit-content;
+  min-width: fit-content;
+  max-width: fit-content;
+}
+
+.max-w-fitcont {
+  max-width: fit-content;
+}
+
+.max-w-10ch {
+  max-width: 10ch;
+}
+
+.max-w-20ch {
+  max-width: 20ch;
+}
+
+/* Desktop override with increased specificity */
+@media (min-width: 768px) {
+  .responsive-field {
+    width: inherit;
+    min-width: fit-content;
+    /*    max-width: 100%;*/
+    flex: 1 1 auto;
+  }
+
+    .responsive-field label {
+      width: fit-content;
+      white-space: nowrap;
+    }
+
+  .max-w-24ch {
+    max-width: 24ch;
+  }
+
+  .max-w-28ch {
+    max-width: 28ch;
+  }
+
+  .max-w-50ch {
+    max-width: 50ch;
+  }
+
+  .input-field input {
+    width: 100%;
+    min-width: 12ch;
+    flex-grow: 1;
+  }
+
+  .input-name input {
+    width: 100%;
+    min-width: 12ch;
+    flex-grow: 1;
+  }
+
+  .input-city input {
+    width: 100%;
+    min-width: 13ch;
+    flex-grow: 1;
+  }
+
+  .input-zip input {
+    width: 100%;
+    min-width: 5ch;
+    flex-grow: 0;
+  }
+
+  .input-phone input {
+    width: 100%;
+    min-width: 20ch;
+    flex-grow: 0;
+  }
+
+  .input-addr input {
+    width: 100%;
+    min-width: 30ch;
+    flex-grow: 2;
+  }
+}
